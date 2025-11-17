@@ -124,3 +124,9 @@ namespace UTIL {
 		return invoke<const char*>(0x51DFA790482861A2);
 	}
 }
+
+namespace GAME_DATA {
+	inline const char* GET_GAME_VERSION() {
+		return invoke<const char*>(0x768934218542736DULL);
+	}
+}
