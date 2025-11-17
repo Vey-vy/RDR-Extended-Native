@@ -9,16 +9,6 @@
 - **Initialization**: Natives are automatically registered when `ExtendedNative::Init()` is called
 - **Context**: Each native receives a `scrNativeCallContext` pointer for argument access and result setting
 
-### FNV1a Hash Function
-
-```cpp
-constexpr uint64_t fnv1a_hash(const char* str)
-```
-
-Example hashes:
-- `"READ_INT32"` → `0x...` (computed at compile-time)
-- `"WRITE_FLOAT"` → `0x...` (computed at compile-time)
-
 ## Native Categories
 
 ### 1. Memory Scanner Natives
