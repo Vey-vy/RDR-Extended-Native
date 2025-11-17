@@ -222,20 +222,23 @@ Retrieving module metadata.
 
 General utility functions.
 
-#### LOG
-- **Hash**: `0x2560B319B8E23FD1`
-- **Arguments**:
-  - `(0)` message: `const char*` - Message to log
-- **Returns**: `bool` - Success status
-- **Description**: Prints a message to console with "[ExtendedNative]" prefix
-- **Output Format**: `[ExtendedNative] <message>`
-
 #### FORMAT_STRING
 - **Hash**: `0x51DFA790482861A2`
 - **Arguments**:
   - `(0)` format: `const char*` - Format string
 - **Returns**: `const char*` - Formatted string
 - **Description**: Returns a formatted string (currently passes through the input)
+
+---
+
+### 7. Game Data
+
+Game Data functions.
+
+#### GET_GAME_VERSION
+- **Hash**: `0x768934218542736DULL`
+- **Returns**: `const char*` - The version of rdr
+- **Description**: Returns the version of rdr
 
 ---
 

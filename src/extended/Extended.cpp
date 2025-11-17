@@ -18,9 +18,6 @@ void ExtendedNative::Init() {
 	Pattern.add("GameBuild", "41 BF ? ? ? ? 48 8D 4E 40 45 8B C7 48 8D 15 ? ? ? ? E8 ? ? ? ?", [ & ](Memory::Handle ptr) {
 		m_GameBuild = ptr.add(16).rip().as<const char*>();
 	});
-	Pattern.add("GameBuild", "41 BF ? ? ? ? 48 8D 4E 40 45 8B C7 48 8D 15 ? ? ? ? E8 ? ? ? ?", [ & ](Memory::Handle ptr) {
-		m_GameBuild = ptr.add(16).rip().as<const char*>();
-	});
 
 	Pattern.run(Memory::Module("RDR.exe"));
 }
@@ -58,6 +55,7 @@ void ExtendedNative::Registers() {
 	    {0x7223ED37CC9BB780ULL, NativeCommandVectorDistance},
 	    {0x8EA0A40DA049F827ULL, NativeCommandVectorLength},
 	    {0x51DFA790482861A2ULL, NativeCommandFormatString},
+		{0x768934218542736DULL, NativeCommandGetGameVersion},
 	};
 
 	for (const auto& native : natives) {
