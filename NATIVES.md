@@ -278,20 +278,20 @@ The `Natives.hpp` header provides organized namespace wrappers with automatic lo
 ```cpp
 #include "Natives.hpp"
 
-SCANNER::Begin("RDR.exe");
-SCANNER::AddPattern("MyFunc", "48 89 5C 24 ? 57", 0, 0, 0);
-SCANNER::Run();
-uint64_t addr = SCANNER::GetResult("MyFunc");
-SCANNER::End();
+SCANNER::SCANNER_BEGIN("RDR.exe");
+SCANNER::SCANNER_ADD_PATTERN("MyFunc", "48 89 5C 24 ? 57", 0, 0, 0);
+SCANNER::SCANNER_RUN();
+uint64_t addr = SCANNER::SCANNER_GET_RESULT("MyFunc");
+SCANNER::SCANNER_END();
 
-MEMORY::Read::Int32(addr);
-MEMORY::Write::Float(addr + 4, 3.14f);
+MEMORY::READ::READ_INT32(addr);
+MEMORY::READ::READ_FLOAT(addr + 4);
 
-uint64_t base = MODULE::GetBase("RDR.exe");
-uint32_t size = MODULE::GetSize("RDR.exe");
+uint64_t base = MODULE::MODULE_GET_BASE("RDR.exe");
+uint32_t size = MODULE::MODULE_GET_SIZE("RDR.exe");
 
-float distance = VECTOR::Distance(0, 0, 0, 10, 0, 0);
-float length = VECTOR::Length(3, 4, 0);
+float distance = VECTOR::VECTOR_DISTANCE(0, 0, 0, 10, 0, 0);
+float length = VECTOR::VECTOR_LENGTH(3, 4, 0);
 ```
 
 ### Pattern Scanning Example
@@ -299,21 +299,21 @@ float length = VECTOR::Length(3, 4, 0);
 ```cpp
 #include "Natives.hpp"
 
-SCANNER::Begin("RDR.exe");
+SCANNER::SCANNER_BEGIN("RDR.exe");
 
-SCANNER::AddPattern("scrEngine_Register", "48 89 5C 24 ? 57 48 83 EC 20", 0, 0, 0);
-SCANNER::AddPattern("RegistrationTable", "48 8B 05 ? ? ? ?", 3, 1, 0);
+SCANNER::SCANNER_ADD_PATTERN("scrEngine_Register", "48 89 5C 24 ? 57 48 83 EC 20", 0, 0, 0);
+SCANNER::SCANNER_ADD_PATTERN("RegistrationTable", "48 8B 05 ? ? ? ?", 3, 1, 0);
 
-if (SCANNER::Run()) {
-	uint64_t engineFunc = SCANNER::GetResult("scrEngine_Register");
-	uint64_t regTable = SCANNER::GetResult("RegistrationTable");
+if (SCANNER::SCANNER_RUN()) {
+	uint64_t engineFunc = SCANNER::SCANNER_GET_RESULT("scrEngine_Register");
+	uint64_t regTable = SCANNER::SCANNER_GET_RESULT("RegistrationTable");
 	
-	Logger::Success("Patterns found: " + std::to_string(SCANNER::CountResults()));
+	Logger::Success("Patterns found: " + std::to_string(SCANNER::SCANNER_COUNT_RESULTS()));
 } else {
-	Logger::Error(SCANNER::GetLastError());
+	Logger::Error(SCANNER::SCANNER_GET_LAST_ERROR());
 }
 
-SCANNER::End(true);
+SCANNER::SCANNER_END(true);
 ```
 
 ### Memory Read/Write Example
@@ -323,12 +323,12 @@ SCANNER::End(true);
 
 uint64_t address = 0x140000000;
 
-int32_t val32 = MEMORY::Read::Int32(address);
-float valFloat = MEMORY::Read::Float(address + 4);
-const char* str = MEMORY::Read::String(address + 8, 256);
+int32_t val32 = MEMORY::READ::READ_INT32(address);
+float valFloat = MEMORY::READ::READ_FLOAT(address + 4);
+const char* str = MEMORY::READ::READ_STRING(address + 8, 256);
 
-MEMORY::Write::Int32(address, 42);
-MEMORY::Write::Float(address + 4, 3.14f);
+MEMORY::WRITE::WRITE_INT32(address, 42);
+MEMORY::Write::WRITE_FLOAT(address + 4, 3.14f);
 ```
 
 ### Module Information Example
@@ -336,8 +336,8 @@ MEMORY::Write::Float(address + 4, 3.14f);
 ```cpp
 #include "Natives.hpp"
 
-uint64_t base = MODULE::GetBase("RDR.exe");
-uint32_t size = MODULE::GetSize("RDR.exe");
+uint64_t base = MODULE::MODULE_GET_BASE("RDR.exe");
+uint32_t size = MODULE::MODULE_GET_SIZE("RDR.exe");
 
 Logger::Info("RDR.exe base: 0x" + std::to_string(base));
 Logger::Info("RDR.exe size: " + std::to_string(size) + " bytes");
@@ -348,11 +348,20 @@ Logger::Info("RDR.exe size: " + std::to_string(size) + " bytes");
 ```cpp
 #include "Natives.hpp"
 
-float dist = VECTOR::Distance(0, 0, 0, 10, 0, 0);
-float mag = VECTOR::Length(3, 4, 0);
+float dist = VECTOR::VECTOR_DISTANCE(0, 0, 0, 10, 0, 0);
+float mag = VECTOR::VECTOR_LENGTH(3, 4, 0);
 
 Logger::Info("Distance: " + std::to_string(dist));
 Logger::Info("Magnitude: " + std::to_string(mag));
+```
+
+### Game Data Example
+
+```cpp
+#include "Natives.hpp"
+
+const char* version = GAME_DATA::GET_GAME_VERSION();
+Logger::Info(std::format("Game Version: {}", version));
 ```
 
 ---
