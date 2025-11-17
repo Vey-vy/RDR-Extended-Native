@@ -1,14 +1,10 @@
 # Extended Native System Documentation
 
-## Overview
-
-The Extended Native System is a comprehensive suite of native functions for RedHook/RDR2 scripting. All natives are registered using FNV1a hashing for their identifiers and are implemented as static inline functions.
-
 ## Architecture
 
 ### Native Registration
 
-- **FNV1a Hash**: All natives are identified by a 64-bit FNV1a hash of their name
+- **Hash**: All natives are identified by hash
 - **Handler Type**: `void (*)(scrNativeCallContext*)`
 - **Initialization**: Natives are automatically registered when `ExtendedNative::Init()` is called
 - **Context**: Each native receives a `scrNativeCallContext` pointer for argument access and result setting
